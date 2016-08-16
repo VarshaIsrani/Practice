@@ -1,0 +1,21 @@
+<html>
+<body>
+<script>
+'use strict';
+var Cat = {
+name:"Fluffy",
+color:"White"
+}
+Object.defineProperty(Cat, 'name', {enumerable:false});
+Object.defineProperty(Cat, 'color', {writable:false});
+
+Cat.color="Black";
+
+for(var prop1 in Cat)
+console.log(prop1+ ":" +Cat[prop])
+
+
+</script>
+</body>
+</html>
+

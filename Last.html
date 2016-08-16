@@ -1,0 +1,73 @@
+//1
+
+var arr=['red', 'blue'];
+
+var fruit=['guava', 'watermelon'];
+
+Object.defineProperty(Array.prototype, 'last', 
+{get: function(){return this[this.length-1]}});
+
+document.write(Array.prototype);
+document.write(fruit.last);
+document.write(" " +arr.last);
+
+
+//2
+var myfun= function(){
+name="Fluffy";
+}
+
+document.write(myfun.prototype);
+
+//3
+var Animal={ name: "kangaroo" , color: "brown"};
+
+var Rabbit = Object.create(Animal.prototype,
+{
+id: "white"
+};
+
+//3(2)
+var animal = { eats: true}
+var rabbit = {jumps: true}
+
+rabbit.__proto__ = animal //inherit
+alert(rabbit.eats) //true}
+
+
+//4
+function Cat(name, color){
+  this.name = name
+  this.color = color
+}
+Cat.prototype.age=3
+
+var fluffy = new Cat('Fluffy', 'White')
+var muffin = new Cat('Muffin' , 'Brown')
+
+fluffy.age=5
+document.write(fluffy.age)
+document.write("<br/>")
+Cat.prototype.age = 4
+
+document.write(fluffy.age)
+document.write("<br/>")
+document.write(muffin.age)
+
+
+//5
+function Animal(voice) {
+  this.voice = voice || 'grunt'
+}
+Animal.prototype.speak = function() {
+  display(this.voice)
+}
+function Cat (name , color) {
+  Animal.call(this, 'meow')
+  this.name=name
+  this.color=color
+}
+Cat.prototype = Object.create(Animal.prototype)
+Cat.prototype.constructor = Cat
+var fluffy = new Cat('Fluffy', 'White')
+document.write(fluffy.__proto__)
