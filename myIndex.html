@@ -2,18 +2,20 @@
 
 <head>
     <title>KnockoutJS Assignment 2</title>
-	<script src="jquery/jquery-3.1.0.min.js"></script>
-    <script src="knockout/knockout-min.js"></script>
+	
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="http://knockoutjs.com/downloads/knockout-3.4.0.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>   
+
     <link rel="stylesheet" href="knockout.css">
-	<script src="myKnockout.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="myKnockout.js"></script>
 </head>
 
 <body>
     <h3>Employee Details</h3>
     <div id="container" data-bind="if: detailsEnabled() == false">
-        <table class="empDetails">
+        <table class="table table-bordered table-responsive">
             <thead>
                 <tr>
                     <th>Employee Id</th>
@@ -50,7 +52,7 @@
     </div>
 	
 	<!-- Trigger the modal with a button -->
- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
   
 <!-- Modal -->	
   <div class="modal fade" id="myModal" role="dialog" show="showmodal">
@@ -74,4 +76,3 @@
     </div>
   </div>
 </body>
-
