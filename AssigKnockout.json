@@ -1,0 +1,4 @@
+"employees" : [
+	{"firstname":"Varsha", "lastname":"Israni", "email":"varshai@cybage.com", "dateOfJoining":"11-07-2016", "extension":"8059", "isOnBench":"Yes"},
+	{"firstname":"Akash", "lastname":"Israni", "email":"akashi@infosys.com", "dateOfJoining":"10-06-2014", "extension":"7057", "isOnBench":"No"}
+] 	

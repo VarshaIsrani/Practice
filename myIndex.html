@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+
+<head>
+    <title>KnockoutJS Assignment 2</title>
+	<script src="jquery/jquery-3.1.0.min.js"></script>
+    <script src="knockout/knockout-min.js"></script>
+    <link rel="stylesheet" href="knockout.css">
+	<script src="myKnockout.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+    <h3>Employee Details</h3>
+    <div id="container" data-bind="if: detailsEnabled() == false">
+        <table class="empDetails">
+            <thead>
+                <tr>
+                    <th>Employee Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Company</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: details">
+                 <tr>
+                    <td data-bind="text:eid"></td>
+                    <td data-bind="text:fname"></td>
+                    <td data-bind="text:lname"></td>
+                    <td data-bind="text:comp"></td>
+                    <td>
+                        <button data-bind= "click:$parent.confirmRemoveRow" data-toggle="modal" data-target="#myModal">Remove</button>
+                        <button data-bind="click: $parent.displayRow">Display</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="container2" data-bind="if: detailsEnabled">
+        <div>Employee Id:<input data-bind="value:empid"/></div>
+        <div>First Name:<input data-bind="value:firstname"/></div>
+        <div>Last Name:<input data-bind="value: lastname"/></div>
+        <div>Company:<input data-bind="value: company"/></div>
+    
+
+    <button class="save" data-bind="click:saveRow">Save</button>
+	<button class="save" data-bind="click:cancelEdit">Cancel</button>
+    </div>
+	
+	<!-- Trigger the modal with a button -->
+ <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+  
+<!-- Modal -->	
+  <div class="modal fade" id="myModal" role="dialog" show="showmodal">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirm Delete?</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete the record?</p>
+        </div>
+        <div class="modal-footer">
+		  <button type="button" class="btn btn-default" data-bind= "click:removeRow" data-dismiss="modal">Ok</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</body>
+

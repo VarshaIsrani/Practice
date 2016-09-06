@@ -1,0 +1,22 @@
+.empDetails {
+	border-collapse: collapse;
+}
+
+.empDetails td{
+  padding:5px;
+  border: 1px solid black;
+}
+
+.empDetails th{
+  padding:5px;
+   border: 1px solid black;
+}
+
+.container2{
+  margin-top:25px;
+ }
+
+.save{
+	margin-top: 20px;
+}
+}

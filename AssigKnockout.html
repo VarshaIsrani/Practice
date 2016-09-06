@@ -1,0 +1,74 @@
+<!doctype html>
+<head>
+	<title>Knockout Assignment</title>
+	<script src="jquery/jquery-3.1.0.min.js"></script>
+    <script src="knockout/knockout-min.js"></script>
+	<script src="AssigKnockout.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="knockout.css">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+<h>Employee Details</h>
+
+<div data-bind="template: {name: 'employee-table', data: employees}"></div>
+
+<!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+  
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+</body>
+
+<script type="text/html" id="employee-table">
+<table class="empDetails">
+	<thead>
+		<tr>
+			<th>Firstname</th>
+			<th>Lastname</th>
+			<th>Email</th>
+			<th>Date of joining</th>
+			<th>Extension</th>
+			<th>isOnBench</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	
+	<tbody data-bind="foreach: details">
+                 <tr>
+                    <td data-bind="text:firstname"></td>
+                    <td data-bind="text:lastname"></td>
+                    <td data-bind="text:email"></td>
+                    <td data-bind="text:dateOfJoining"></td>
+					<td data-bind="text:extension"></td>
+					<td data-bind="text:isOnBench == 'true' ? 'Yes' : 'No'"></td>
+                    <td>
+					
+					<button data-bind="click: $parent.displayRow">Edit</button>
+                    <button data-bind= "click:$parent.removeRow">Delete</button>
+                        
+                    </td>
+                </tr>
+            </tbody>
+</table>
+</script>
