@@ -2,6 +2,13 @@
 	border-collapse: collapse;
 }
 
+
+.table-bordered>tbody>tr:nth-child(odd)>td{
+	 background-color: lightblue;
+}
+.table-bordered>tbody>tr:nth-child(even)>td{
+	 background-color: lightyellow;
+}
 .empDetails td{
   padding:5px;
   border: 1px solid black;
