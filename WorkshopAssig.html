@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+
+<head>
+    <title>Workshop Assignment</title>
+	
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="http://knockoutjs.com/downloads/knockout-3.4.0.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
+    <script type="text/javascript" src="komap.js"></script>
+
+</head>
+
+<body>
+	<div class="container" data-bind="visible: Wrapper">
+		<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<button data-bind="click:addBook" class="btn btn-default">Add Book</button>
+			<button data-bind="click:addAuthor" class="btn btn-default">Add Author</button>
+		</div>
+		</nav>
+		
+		<div class="container-fluid">	
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>ISBN</th>
+						<th>Title</th>
+						<th>Author</th>
+								
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: tableDetails">
+					<tr>
+						<td data-bind="text:isbn click:displayBook"></td>
+						<td data-bind="text:title"></td>
+						<td data-bind="text:author"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div data-bind="visible: bookDetailsDisplay">
+		Book ISBN:<input type="text" data-bind="value: isbn"/>
+		Title:<input type="text" data-bind="value: title"/>
+		Author:<input type="text" data-bind="value: author"/>
+		Price:<input type="text" data-bind="value: price"/>
+		Availability:<input type="text" data-bind="value: availableOn"/>
+
+	</div>
+
+	<div data-bind="visible: bookDetailsEnabled">
+		<form>
+		  
+		  <div class="form-group">
+			<label for="isbnM">ISBN</label>
+			<input type="text" class="form-control" id="isbnM" data-bind="
+			value: _isbnM">
+		  </div>
+		  <div class="form-group">
+			<label for="titleM">Title</label>
+			<input type="text" class="form-control" id="titleM" data-bind="
+			value: titleM">
+		  </div>
+		  <div class="form-group">
+			<label for="authorM">Author</label>
+			<input type="text" class="form-control" id="authorM" data-bind="
+			value: authorM">
+		  </div>
+		 
+		</form>
+		<button data-bind="click:saveBook" class="btn btn-success">Save</button>
+		
+	</div>
+
+
+	<div data-bind="visible: authorDetailsEnabled">
+		<form>
+		  <div class="form-group">
+			<label for="empID">Employee ID</label>
+			<input type="text" class="form-control" id="empID" placeholder="" >
+		  </div>
+		  <div class="form-group">
+			<label for="name">Name</label>
+			<input type="text" class="form-control" id="name" placeholder="">
+		  </div>
+		  <div class="form-group">
+			<label for="email">Email</label>
+			<input type="email" class="form-control" id="email" placeholder="jane.doe@example.com">
+		  </div>
+		  <div class="form-group">
+			<label for="website">Website</label>
+			<input type="url" class="form-control" id="website">
+		  </div>
+		  <div class="form-group">
+			<label for="dept">Department</label>
+			<input type="text" class="form-control" id="dept">
+		  </div>
+		   <div class="form-group">
+			<label for="skills">Skills</label>
+			<input type="text" class="form-control" id="skills">
+		  </div>
+		</form>
+		 <button data-bind="click:saveAuthor" class="btn btn-success">Save</button>
+	</div>
+</body>
+
+<script type="text/javascript">
+function viewModel(){
+var self = this;
+self.tableDetails= ko.observableArray();	
+self.bookDetailsDisplay = ko.observable(false);
+self.bookDetailsEnabled = ko.observable(false);
+self.authorDetailsEnabled = ko.observable(false);
+self.Wrapper = ko.observable(true);
+$.ajax({
+	url : 'http://172.27.12.104:3000/book/list',
+	dataType : 'json',
+	success : function(data){
+		console.log(data);
+		self.tableDetails(data);
+	}
+});	
+
+$.ajax({
+	url : '172.27.12.104:3000/author/list',
+	dataType : 'json',
+	success : function(data){
+		console.log(data);
+		self.author(data);
+	}
+});	
+
+self.displayBook = function(data){
+	self.bookDetailsDisplay(true);
+	self.Wrapper(false);
+	self.isbn(data.isbn);
+	self.title(data.title);
+	self.author(data.author);
+	self.price(data.price);
+	self.availableOn(data.availableOn);
+}
+
+
+
+
+
+
+ self.addBook = function(){
+    self.bookDetailsEnabled(true);
+}
+
+self.addAuthor = function(){
+    self.authorDetailsEnabled(true);
+}
+
+self.saveBook = function(){
+   self.tableDetails.push({_id: self._idM, isbn: self.isbnM, title: self.titleM, author: self.authorM, price: self.priceM, availOn: self.availOnM})
+    
+   self.bookDetailsEnabled(false);
+}
+
+
+}
+ko.applyBindings(new viewModel());
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
