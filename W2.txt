@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+
+<head>
+    <title>Workshop Assignment</title>
+	
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="http://knockoutjs.com/downloads/knockout-3.4.0.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
+    <script type="text/javascript" src="komap.js"></script>
+
+</head>
+
+<body>
+	<div class="container" data-bind="visible: Wrapper">
+		<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<button data-bind="click:addBook" class="btn btn-default">Add Book</button>
+			<button data-bind="click:addAuthor" class="btn btn-default">Add Author</button>
+		</div>
+		</nav>
+		
+		<div class="container-fluid">	
+			<table class="table table-bordered ">
+				<thead>
+					<tr>
+						<th>ISBN</th>
+						<th>Title</th>
+						<th>Author</th>
+								
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: tableDetails">
+					<tr>
+						<td data-bind="text:isbn, click: $parent.displayBook"></td>
+						<td data-bind="text:title"></td>
+						<td data-bind="text:author, click: $parent.displayAuthor"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div data-bind="visible: bookDetailsDisplay">
+		<div>Book ISBN:<input type="text" data-bind="value: isbn"/></div>
+		<div>Title:<input type="text" data-bind="value: title"/></div>
+		<div>Author:<input type="text" data-bind="value: author"/></div>
+		<div>Price:<input type="text" data-bind="value: price"/></div>
+		<div>Availability:<input type="text" data-bind="value: availableOn"/></div>
+	</div>
+
+	<div data-bind="visible: authorDetailsDisplay">
+		<div>Employ ID:<input type="text" data-bind="value: empid"/></div>
+		<div>Name:<input type="text" data-bind="value: name"/></div>
+		<div>Email:<input type="text" data-bind="value: email"/></div>
+		<div>Website:<input type="text" data-bind="value: website"/></div>
+		<div>Department:<input type="text" data-bind="value: department"/></div>
+		<div>Skills:<input type="text" data-bind="value: skills"/></div>
+		<div>
+		<button data-bind: "click: editAuthor">Edit</button>
+		<button data-bind: "click: deleteAuthor">Delete</button>
+		</div>
+	</div>
+		
+
+</body>
+
+<script type="text/javascript">
+function viewModel(){
+	var self = this;
+	self.tableDetails= ko.observableArray();	
+	self.bookDetailsDisplay = ko.observable(false);
+	self.authorDetailsDisplay = ko.observable(false);
+	self.Wrapper = ko.observable(true);
+
+	self.isbn=ko.observable();
+	self.title=ko.observable();
+	self.author=ko.observable();
+	self.price=ko.observable();
+	self.availableOn=ko.observable();
+
+	self.empid=ko.observable();
+	self.name=ko.observable();
+	self.email=ko.observable();
+	self.website=ko.observable();
+	self.department=ko.observable();
+	self.skills=ko.observable();
+
+
+	$.ajax({
+		url : 'http://172.27.12.104:3000/book/list',
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			self.tableDetails(data);
+		}
+	});	
+
+
+
+	self.displayBook = function(data){
+		self.bookDetailsDisplay(true);
+		self.Wrapper(false);
+		self.authorDetailsDisplay(false);
+		self.isbn(data.isbn);
+		self.title(data.title);
+		self.author(data.author);
+		self.price(data.price);
+		self.availableOn(data.availableOn);
+	}
+	
+	self.displayAuthor = function(data){
+		self.bookDetailsDisplay(false);
+		self.Wrapper(false);
+		self.authorDetailsDisplay(true);
+		var author = { "name" :data.author };
+		$.ajax({
+		url : 'http://172.27.12.104:3000/author/byname ',
+		dataType : 'json',
+		data : author ,
+		type: "POST" ,
+		success : function(data){
+			console.log(data);
+			self.empid(data.empid);
+			self.name(data.name);
+			self.email(data.email);
+			self.website(data.website);
+			self.department(data.department);
+			self.skills(data.skills);
+		}
+	});	
+	}
+		
+
+
+
+
+
+
+	 self.addBook = function(){
+		self.bookDetailsEnabled(true);
+	}
+
+	self.addAuthor = function(){
+		self.authorDetailsEnabled(true);
+	}
+
+
+
+
+}
+ko.applyBindings(new viewModel());
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
