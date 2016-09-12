@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <title>Workshop Assignment</title>
+	
+    <script src="../jquery/jquery-3.1.0.min.js"></script>
+    <script src="../knockout/knockout-min.js"></script>
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+	<script src="WorkshopAssig.js"></script>
+
+</head>
+
+<body>
+	<div class="container" style="margin-top: 20px;">
+		<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<button data-bind="click:addBookView" class="btn btn-default">Add Book</button>
+			<button data-bind="click:addAuthorView" class="btn btn-default">Add Author</button>
+		</div>
+		</nav>	
+		
+	</div>
+	
+	<div class="container">
+		<div class="container-fluid" data-bind="if: Wrapper">	
+			<table class="table table-bordered ">
+				<thead>
+					<tr>
+						<th>ISBN</th>
+						<th>Title</th>
+						<th>Author</th>
+								
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: tableDetails">
+					<tr>
+						<td data-bind="text:isbn, click: $parent.displayBook"></td>
+						<td data-bind="text:title"></td>
+						<td data-bind="text:author, click: $parent.displayAuthor"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="container-fluid" data-bind="if: bookDetailsDisplay">
+			<!-- <div>Book ISBN:<input type="text" data-bind="value: isbn"/></div>
+			<div>Title:<input type="text" data-bind="value: title"/></div>
+			<div>Author:<input type="text" data-bind="value: author"/></div>
+			<div>Price:<input type="text" data-bind="value: price"/></div>
+			<div>Availability:<input type="text" data-bind="value: availableOn"/></div>
+			<div>
+			<button data-bind="click: updateBook">Update</button>
+			<button data-bind="click: deleteBook">Delete</button>
+			</div> -->
+			
+			<form class="form-horizontal">
+			  <div class="form-group">
+				<label class="control-label col-sm-2" for="email">Book ISBN:</label>
+				<div class="col-sm-6">
+				  <input type="text" class="form-control" data-bind="value: isbn"/>
+				</div>
+			  </div>
+			  <div class="form-group">
+				<label class="control-label col-sm-2" for="pwd">Title:</label>
+				<div class="col-sm-6"> 
+				  <input type="text" class="form-control" data-bind="value: title"/>
+				</div>
+			  </div>
+			  <div class="form-group">
+				<label class="control-label col-sm-2" for="email">Book ISBN:</label>
+				<div class="col-sm-6">
+				  <input type="text" class="form-control" data-bind="value: author"/>
+				</div>
+			  </div>
+			  <div class="form-group">
+				<label class="control-label col-sm-2" for="pwd">Title:</label>
+				<div class="col-sm-6"> 
+				  <input type="text" class="form-control" data-bind="value: price"/>
+				</div>
+			  </div>
+			  <div class="form-group">
+				<label class="control-label col-sm-2" for="email">Book ISBN:</label>
+				<div class="col-sm-6">
+				  <input type="text" class="form-control" data-bind="value: availableOn"/>
+				</div>
+			  </div>
+			  <div class="form-group"> 
+				<div class="col-sm-offset-2 col-sm-10">
+				  <button type="submit" class="btn btn-success" data-bind="click: updateBook">Update</button>
+				  <button class="btn btn-danger" data-bind="click: deleteBook">Delete</button>
+				</div>
+			  </div>
+			</form>
+		</div>
+	</div>
+	
+	<div class="container">
+		<div class="container-fluid" data-bind="if: bookDetailsAdd">
+		<div>Book ISBN:<input type="text" disabled data-bind="value: isbn"/></div>
+		<div>Title:<input type="text" data-bind="value: title"/></div>
+		<div>Author:<input type="text" data-bind="value: author"/></div>
+		<div>Price:<input type="text" data-bind="value: price"/></div>
+		<div>Availability:<input type="text" data-bind="value: availableOn"/></div>
+		<div>
+		<button data-bind="click: addBook">Save</button>
+		</div>
+	</div>
+	</div>
+
+	<div class="container">
+		<div class="container-fluid" data-bind="if: authorDetailsDisplay">
+		<div>Employ ID:<input type="text" data-bind="value: empid"/></div>
+		<div>Name:<input type="text" data-bind="value: name"/></div>
+		<div>Email:<input type="text" data-bind="value: email"/></div>
+		<div>Website:<input type="text" data-bind="value: website"/></div>
+		<div>Department:<input type="text" data-bind="value: department"/></div>
+		<div>Skills:
+			<input type="checkbox" value="crime" data-bind="checked: skills" /> Crime
+			<input type="checkbox" value="horror" data-bind="checked: skills" /> Horror
+			<input type="checkbox" value="comedy" data-bind="checked: skills" /> Comedy</div>
+		<div>
+		<button data-bind="click: updateAuthor">Update</button>
+		<button data-bind="click: deleteAuthor">Delete</button>
+		</div>
+	</div>	
+	</div>
+	
+	<div class="container">
+		<div class="container-fluid" data-bind="if: authorDetailsAdd">
+		<div>Employ ID:<input type="text" disabled data-bind="value: empid"/></div>
+		<div>Name:<input type="text" data-bind="value: name"/></div>
+		<div>Email:<input type="text" data-bind="value: email"/></div>
+		<div>Website:<input type="text" data-bind="value: website"/></div>
+		<div>Department:<input type="text" data-bind="value: department"/></div>
+		<div>Skills:
+			<input type="checkbox" value="crime" data-bind="checked: skills" /> Crime
+			<input type="checkbox" value="horror" data-bind="checked: skills" /> Horror
+			<input type="checkbox" value="comedy" data-bind="checked: skills" /> Comedy</div>
+		<div>
+		<button data-bind="click: addAuthor">Save</button>
+		</div>
+	</div>	
+	</div>
+
+	<div class="container" style="margin-top: 20px;" data-bind="if: Wrapper() == false">
+		<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<button data-bind="click:goToMain" class="btn btn-default">Cancel</button>
+		</div>
+		</nav>	
+		
+	</div>	
+
+</body>
+
+</html>

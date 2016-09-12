@@ -1,0 +1,249 @@
+$(function() {
+	function viewModel(){
+		var self = this;
+		self.tableDetails= ko.observableArray();
+		
+		self.Wrapper = ko.observable(true);
+		self.bookDetailsDisplay = ko.observable(false);
+		self.authorDetailsDisplay = ko.observable(false);
+		self.bookDetailsAdd = ko.observable(false);
+		self.authorDetailsAdd = ko.observable(false);
+
+		self.isbn=ko.observable();
+		self.title=ko.observable();
+		self.author=ko.observable();
+		self.price=ko.observable();
+		self.availableOn=ko.observable();
+			
+		self.empid=ko.observable();
+		self.name=ko.observable();
+		self.email=ko.observable();
+		self.website=ko.observable();
+		self.department=ko.observable();
+		self.skills=ko.observableArray();
+			
+		function initBookForm() {
+			self.isbn('');
+			self.title('');
+			self.author('');
+			self.price('');
+			self.availableOn('');				
+		}
+		
+		function initAuthorForm() {
+			self.empid('');
+			self.name('');
+			self.email('');
+			self.website('');
+			self.department('');
+			self.skills([]);	
+		}		
+
+		var tableData = [
+			{isbn: 'isbn1', title: 'Title1', author: 'Author1', price: '123', availableOn: '3/4/5'},
+			{isbn: 'isbn2', title: 'Title2', author: 'Author2', price: '123', availableOn: '3/4/5'},
+			{isbn: 'isbn3', title: 'Title3', author: 'Author3', price: '123', availableOn: '3/4/5'},
+			{isbn: 'isbn4', title: 'Title4', author: 'Author4', price: '123', availableOn: '3/4/5'}
+		];
+
+		/* $.ajax({
+		//	url : 'http://172.27.12.104:3000/book/list',
+		//	dataType : 'json',
+		//	success : function(data){
+		//		console.log(data);
+		//		self.tableDetails(data);
+		//	}
+		//});	*/
+
+		self.tableDetails(tableData);
+
+		self.displayBook = function(data){
+			self.bookDetailsDisplay(true);
+			self.Wrapper(false);
+			self.authorDetailsDisplay(false);
+			self.bookDetailsAdd(false);
+			self.authorDetailsAdd(false);
+			
+			self.isbn(data.isbn);
+			self.title(data.title);
+			self.author(data.author);
+			self.price(data.price);
+			self.availableOn(data.availableOn);
+		}
+		
+		self.displayAuthor = function(data){
+			self.bookDetailsDisplay(false);
+			self.Wrapper(false);
+			self.authorDetailsDisplay(true);
+			self.bookDetailsAdd(false);
+			self.authorDetailsAdd(false);
+			
+			var author = { "name" : data.author };
+			/*$.ajax({
+				url : 'http://172.27.12.104:3000/author/byname',
+				dataType : 'json',
+				data : author ,
+				type: "POST" ,
+				success : function(data){
+					console.log(data);
+					self.empid(data.empid);
+					self.name(data.name);
+					self.email(data.email);
+					self.website(data.website);
+					self.department(data.department);
+					self.skills(data.skills);
+				}
+			});	*/
+			
+			self.empid('123');
+			self.name('Author');
+			self.email('auth@gmail.com');
+			self.website('data.website.com');
+			self.department('data.department');
+			self.skills(['horror', 'comedy']);
+		}
+		
+		self.goToMain = function() {
+			self.Wrapper(true);
+			self.bookDetailsDisplay(false);
+			self.authorDetailsDisplay(false);
+			self.bookDetailsAdd(false);
+			self.authorDetailsAdd(false);
+		}
+		
+		self.updateBook = function(){
+			//implement POST for Update book
+			var updatedBook = { "isbn" : self.isbn(), "author" : self.author(), "title" : self.title(),  "price":  self.price(), "availableOn": self.availableOn()};
+			console.log('updatedBook', updatedBook);
+			/*$.ajax({
+				url : 'http://172.27.12.104:3000/book/update',
+				dataType : 'json',
+				data : updatedBook,
+				type: "POST" ,
+				success : function(data){
+					location.reload();
+				},
+				error: function(error){
+					console.log(error);
+					alert('There was an error in updating the book details');
+				}
+			});	*/
+				//location.reload();		
+		}
+
+		self.updateAuthor = function(){
+			//implement POST for Update author
+			var updatedAuthor = { "name" : self.name(), "empid" : self.empid(), "email" : self.email(), "website":  self.website(), "department": self.department(), "skills": self.skills()};
+			console.log('updatedAuthor', updatedAuthor);
+			/*$.ajax({
+				url : 'http://172.27.12.104:3000/author/update',
+				dataType : 'json',
+				data : updatedAuthor,
+				type: "POST" ,
+				success : function(data){
+					location.reload();
+				},
+				error: function(error){
+					console.log(error);
+					alert('There was an error in updating the author details');
+				}
+			});	*/
+				//location.reload();		
+		}
+		
+		self.deleteBook = function(){
+			//implement DELETE for Update book/ use data if POST method
+			var deleteBook = {isbn: self.isbn()};
+			/*$.ajax({
+				url : 'http://172.27.12.104:3000/author/delete?isbn=' + self.isbn(),
+				dataType : 'json',
+				data : deleteBook,
+				type: "DELETE" ,
+				success : function(data){
+					location.reload();
+				},
+				error: function(error){
+					console.log(error);
+					alert('There was an error in deleting the book');
+				}
+			});	*/
+		}
+
+		self.deleteAuthor = function(){
+			//implement DELETE for Update author
+			var deleteAuthor = {empid: self.empid()};
+			/*$.ajax({
+				url : 'http://172.27.12.104:3000/author/delete?empid=' + self.empid(),
+				dataType : 'json',
+				data : deleteAuthor,
+				type: "DELETE" ,
+				success : function(data){
+					location.reload();
+				},
+				error: function(error){
+					console.log(error);
+					alert('There was an error in deleting the author');
+				}
+			});	*/			
+		}
+
+		self.addBookView = function(){
+			self.Wrapper(false);
+			self.bookDetailsDisplay(false);
+			self.authorDetailsDisplay(false);
+			self.bookDetailsAdd(true);
+			self.authorDetailsAdd(false);
+			initBookForm();
+		}
+		
+		self.addBook = function() {
+			//implement POST for Add book
+			var updatedBook = { "isbn" : self.isbn(), "author" : self.author(), "title" : self.title(),  "price":  self.price(), "availableOn": self.availableOn()};
+			console.log('updatedBook', updatedBook);
+			/*$.ajax({
+				url : 'http://172.27.12.104:3000/book/add',
+				dataType : 'json',
+				data : updatedBook,
+				type: "POST" ,
+				success : function(data){
+					location.reload();
+				},
+				error: function(error){
+					console.log(error);
+					alert('There was an error in adding the book details');
+				}
+			});	*/
+				//location.reload();
+		}
+
+		self.addAuthorView = function(){
+			self.Wrapper(false);
+			self.bookDetailsDisplay(false);
+			self.authorDetailsDisplay(false);
+			self.bookDetailsAdd(false);
+			self.authorDetailsAdd(true);
+			initAuthorForm();
+		}
+		
+		self.addAuthor = function() {
+			//implement POST for Add author
+			var updatedAuthor = { "name" : self.name(), "empid" : self.empid(), "email" : self.email(), "website":  self.website(), "department": self.department(), "skills": self.skills()};
+			console.log('updatedAuthor', updatedAuthor);
+			/*$.ajax({
+				url : 'http://172.27.12.104:3000/author/add',
+				dataType : 'json',
+				data : updatedAuthor,
+				type: "POST" ,
+				success : function(data){
+					location.reload();
+				},
+				error: function(error){
+					console.log(error);
+					alert('There was an error in adding the author details');
+				}
+			});	*/
+		}
+	}
+
+	ko.applyBindings(new viewModel());
+});
